@@ -1,4 +1,5 @@
-# Sign_Object_Detection
+# Nguyễn Hoàng Việt - B20DCCN728
+# PMC WAGNER 
 
 This template should help get you started developing with Vue 3 in Vite.
 
