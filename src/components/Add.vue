@@ -19,7 +19,7 @@
         </a-radio-group>
       </a-form-item> -->
       <a-form-item label="Hand">
-        <a-input v-model="formData.name"/>
+        <a-input v-model:value="formData.name"/>
       </a-form-item>
       <!-- <a-form-item label="">
         <a-input />
@@ -57,7 +57,14 @@
         <a-switch v-model:checked="checked" />
       </a-form-item> -->
       <a-form-item label="Upload">
-        <a-upload action="http://127.0.0.1:8000/upload" list-type="picture-card" >
+        <a-upload
+          v-model:file-list="fileList"
+          name="file"
+          :headers="headers"
+          @change="handleChange"
+          action="http://127.0.0.1:8000/upload" 
+          list-type="picture-card" 
+        >
           <div>
             <PlusOutlined />
             <div style="margin-top: 8px">Upload</div>
@@ -80,6 +87,23 @@
   import { message } from 'ant-design-vue';
 //   const componentDisabled = ref(true);
   import axios from 'axios';
+
+
+  const handleChange = info => {
+  if (info.file.status !== 'uploading') {
+    console.log(info.file, info.fileList);
+  }
+  if (info.file.status === 'done') {
+    message.success(`${info.file.name} file uploaded successfully`);
+  } else if (info.file.status === 'error') {
+    message.error(`${info.file.name} file upload failed.`);
+  }
+  };
+  const fileList = ref([]);
+  const headers = {
+    authorization: 'authorization-text',
+  };
+
   const ok = ref('ok');
   const formData = ref({
         name: 'Hand',
@@ -119,14 +143,14 @@
     },
   ]);
 
-  const uploadEndpoint = 'http://127.0.0.1:8000/ok'; // Thay đổi thành địa chỉ API của bạn
+  const uploadEndpoint = 'http://127.0.0.1:8000/upload'; // Thay đổi thành địa chỉ API của bạn
     const handleSubmit = () => {
         // console.log(formData);
         // if (!formData.file || !formData.name) {
         //     message.error('Vui lòng điền đủ thông tin.');
         //     return;
         // }
-        console.log(formData.name);
+        console.log(formData.value.name);
         const formDataToSend = new FormData();
         formDataToSend.append('name', formData.name);
         formDataToSend.append('file', formData.file);

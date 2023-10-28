@@ -1,6 +1,6 @@
 <template>
     <a-button class="editable-add-btn" style="margin-bottom: 8px" @click="handleAdd">Add</a-button>
-    <a-table bordered :data-source="dataSource" :columns="columns" resize>
+    <a-table bordered :data-source="dataSource" :columns="columns" size="100%">
       <template #bodyCell="{ column, text, record }">
         <!-- Title column -->
         <template v-if="column.dataIndex === 'name'">
@@ -82,6 +82,7 @@
   <script setup>
   import { computed, onMounted, reactive, ref } from 'vue';
   // import type { Ref, UnwrapRef } from 'vue';
+  
   import { CheckOutlined, EditOutlined } from '@ant-design/icons-vue';
   import { cloneDeep } from 'lodash-es';
   import axios from 'axios';
@@ -90,28 +91,35 @@
   // Config columns 
   const columns = [
     {
-      title: 'name',
+      title: 'Tên mẫu',
       dataIndex: 'name',
-      width: '30%',
+      filters: [
+        {
+          text: 'Hand',
+          value: 'hand',
+        }
+      ],
+      filterSearch: true,
     },
     {
-      title: 'validDate',
+      title: 'Ngày thêm',
       dataIndex: 'validDate',
+      sorter: (a, b) => a.validDate - b.validDate,
     },
     {
-      title: 'link_img',
+      title: 'Đường dẫn ảnh',
       dataIndex: 'link_img',
     },
     {
-      title: 'link_map',
+      title: 'Đường dẫn tệp gán nhãn',
       dataIndex: 'link_map',
     },
     {
-      title: 'label',
+      title: 'Nhãn',
       dataIndex: 'label',
     },
     {
-      title: 'operation',
+      title: 'Thao tác',
       dataIndex: 'operation',
     },
   ];
@@ -226,6 +234,7 @@
     .editable-cell-input-wrapper,
     .editable-cell-text-wrapper {
       padding-right: 24px;
+      max-width: 250px;
     }
   
     .editable-cell-text-wrapper {
