@@ -5,7 +5,7 @@
         collapsed-width="0"
         @collapse="onCollapse"
         @breakpoint="onBreakpoint"
-        :style="{  height: '945px' }"
+        :style="{  height: '1700' }"
       >
         <div class="logo" />
         <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
@@ -28,9 +28,9 @@
         </a-menu>
       </a-layout-sider>
       <a-layout>
-        <a-layout-header :style="{ background: '#fff', padding: 0 }" />
+        <!-- <a-layout-header :style="{ background: '#fff', padding: 0 }" /> -->
         <!-- <a-layout-header :style="{ background: '#fff', padding: 0, position: 'fixed', width: '100%', zIndex: 1 }" /> -->
-        <a-layout-content :style="{ margin: '24px 16px 0' }">
+        <a-layout-content :style="{ margin: '24px 16px 0' }">    
           <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
               <!-- <Table /> -->
               <router-view></router-view>

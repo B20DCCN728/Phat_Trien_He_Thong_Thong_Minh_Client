@@ -1,4 +1,15 @@
 <template>
+  <!-- Sample Header -->
+    <div>
+      <a-descriptions title="Quản lí mẫu">
+        <a-descriptions-item label="Mẫu">Bàn tay</a-descriptions-item>
+        <a-descriptions-item label="Đường dẫn ảnh">Là đường dẫn của ảnh để train trong hệ thống</a-descriptions-item>
+        <a-descriptions-item label="Số lượng">{{ dataSource.length }}</a-descriptions-item>
+        <a-descriptions-item label="Trạng thái">Ok</a-descriptions-item>
+        <a-descriptions-item label="Đường dẫn tệp gán nhãn">Là đường dẫn của tệp chứa các thông số gán nhãn</a-descriptions-item>
+      </a-descriptions>
+    </div>
+
     <a-button class="editable-add-btn" style="margin-bottom: 8px" @click="handleAdd">Add</a-button>
     <a-table bordered :data-source="dataSource" :columns="columns" size="100%">
       <template #bodyCell="{ column, text, record }">
@@ -82,7 +93,7 @@
   <script setup>
   import { computed, onMounted, reactive, ref } from 'vue';
   // import type { Ref, UnwrapRef } from 'vue';
-  
+  import message from 'ant-design-vue/es/message';
   import { CheckOutlined, EditOutlined } from '@ant-design/icons-vue';
   import { cloneDeep } from 'lodash-es';
   import axios from 'axios';
@@ -125,22 +136,6 @@
   ];
   
 
-  // Config dataSource
-  // const dataSource = ref([
-  //   {
-  //     key: '0',
-  //     name: 'Edward King 0',
-  //     age: 32,
-  //     address: 'London, Park Lane no. 0',
-  //   },
-  //   {
-  //     key: '1',
-  //     name: 'Edward King 1',
-  //     age: 32,
-  //     address: 'London, Park Lane no. 1',
-  //   },
-  // ]);
-
   const dataSource = ref([]);
 
   const count = computed(() => dataSource.value.length + 1);
@@ -151,6 +146,7 @@
   }
 
   const updateRecord = async (key) => {
+
     try {
       // Get the updated data from editableData[key]
       const updatedData = editableData[key];
@@ -161,6 +157,7 @@
       console.error('Error updating record:', error);
       // Handle error appropriately (e.g., show an error message)
     }
+
   };
 
   const save = key => {
@@ -181,16 +178,21 @@
   const onDelete = async (key) => {
     try {
       // Send an HTTP DELETE request to delete the record
-      const response = await axios.delete(`http://127.0.0.1:8000/sample/${key}`);
-      
-      console.log('Record deleted:', response.data); // Add this line (optional
+        axios
+          .delete(`http://127.0.0.1:8000/sample/${key}`)
+          .then((response) => {
+            message.success('Đã xóa mẫu thành công' + JSON.stringify(response.data));
+          })
+          .catch((error) => {
+            message.error('Lỗi xóa mẫu ' + error.message);
+          });
 
       // After successful deletion, update the data or refetch
       fetchData(); // or update your ref-based data
     
     } catch (error) {
       console.error('Error deleting record:', error);
-      // Handle error appropriately (e.g., show an error message)
+      // Handle error appropriately (e.g., show an error meujssage)
     }
     dataSource.value = dataSource.value.filter(item => item.id !== key);
   };
@@ -209,14 +211,14 @@
 
   // Fetch dataset from server 
   const fetchData = async () => {
-  try {
-    const response = await axios.get('http://127.0.0.1:8000/sample/all');
-    dataSource.value = response.data; // Replace dataSource with the fetched data
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/sample/all');
+      dataSource.value = response.data; // Replace dataSource with the fetched data
 
-    console.log('Data fetched:', response.data); // Add this line
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
+      console.log('Data fetched:', response.data); // Add this line
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   // Save data to server
