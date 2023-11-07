@@ -5,7 +5,7 @@
       title="Overview"
       sub-title="Xem danh sách mẫu đã có"
       @back="() => {
-        this.$router.push('/home/overview');
+        this.$router.push(`/home/dataset/${datasetId}`);
       }"
     />
     <!-- </template> -->
@@ -39,7 +39,7 @@
           name="file"
           :headers="headers"
           @change="handleChange"
-          action="http://127.0.0.1:8000/upload" 
+          :action="`http://127.0.0.1:8000/dataset/${datasetId}/upload`" 
           list-type="picture-card" 
         >
           <div>
@@ -58,7 +58,11 @@
   import { message } from 'ant-design-vue';
 //   const componentDisabled = ref(true);
   import axios from 'axios';
+  import { useRoute } from 'vue-router';
 
+  // Declare 
+  const route = useRoute();
+  const datasetId = ref(route.params.datasetId);
 
   const handleChange = info => {
   if (info.file.status !== 'uploading') {
@@ -115,7 +119,7 @@
     },
   ]);
 
-  const uploadEndpoint = 'http://127.0.0.1:8000/create-sample'; // My API endpoint
+  const uploadEndpoint = `http://127.0.0.1:8000/dataset/${datasetId.value}/create-sample`; // My API endpoint
 
   const handleSubmit = () => {
         // console.log(formData);

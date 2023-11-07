@@ -1,4 +1,13 @@
 <template>
+  <!-- <template> -->
+    <a-page-header
+      style="border: 1px solid rgb(235, 237, 240)"
+      title="Overview"
+      sub-title="Xem danh sách tập dữ liệu đã có"
+      @back="() => {
+        this.$router.push('/home/dataset');
+      }"
+    />
   <!-- Sample Header -->
     <div>
       <a-descriptions title="Quản lí mẫu">
@@ -98,6 +107,11 @@
   import { cloneDeep } from 'lodash-es';
   import axios from 'axios';
   import { useRouter } from 'vue-router';
+  import { useRoute } from 'vue-router';
+
+  // Declare 
+  const route = useRoute();
+  const datasetId = ref(route.params.datasetId);
 
   // Config columns 
   const columns = [
@@ -139,7 +153,9 @@
   const dataSource = ref([]);
 
   const count = computed(() => dataSource.value.length + 1);
+
   const editableData = reactive({});
+
   const edit = key => {
     console.log('key', key);
     editableData[key] = cloneDeep(dataSource.value.filter(item => key === item.id)[0]);
@@ -199,7 +215,7 @@
 
   const router = useRouter();
   const handleAdd = () => { 
-    router.push('./add');
+    router.push(`./${datasetId.value}/add`);
     // const newData = {
     //   key: `${count.value}`,
     //   name: `Edward King ${count.value}`,
@@ -212,8 +228,8 @@
   // Fetch dataset from server 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/sample/all');
-      dataSource.value = response.data; // Replace dataSource with the fetched data
+      const response = await axios.get(`http://127.0.0.1:8000/dataset/${datasetId.value}`);
+      dataSource.value = response.data.samples; // Replace dataSource with the fetched data
 
       console.log('Data fetched:', response.data); // Add this line
     } catch (error) {

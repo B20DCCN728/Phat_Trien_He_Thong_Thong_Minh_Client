@@ -10,15 +10,16 @@ const routes = [
             {
                 path: "dataset",
                 name: "Dataset",
-                component: () => import("../components/Dataset.vue")
+                component: () => import("../components/Dataset.vue"),
             },
             {
-                path: "overview",
+                path: "dataset/:datasetId",
                 name: "Table",
                 component: () => import("../components/Table.vue"),
+                props: true,
             },
             {
-                path: "add",
+                path: "dataset/:datasetId/add",
                 name: "Add",
                 component: () => import("../components/Add.vue"),
             },
