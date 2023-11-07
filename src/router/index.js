@@ -8,6 +8,11 @@ const routes = [
         component: Layout,
         children: [
             {
+                path: "dataset",
+                name: "Dataset",
+                component: () => import("../components/Dataset.vue")
+            },
+            {
                 path: "overview",
                 name: "Table",
                 component: () => import("../components/Table.vue"),
