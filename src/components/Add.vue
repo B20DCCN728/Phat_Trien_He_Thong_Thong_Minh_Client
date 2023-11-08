@@ -133,6 +133,7 @@
         formDataToSend.append('link_img', fileList.value[0].name);
         formDataToSend.append('validDate', '2023-10-29 00:43:54.000');
         formDataToSend.append('link_map', fileList.value[1].name);
+        // formDataToSend.append('link_map', "");
         axios
             .post(uploadEndpoint, formDataToSend)
             .then((response) => {
