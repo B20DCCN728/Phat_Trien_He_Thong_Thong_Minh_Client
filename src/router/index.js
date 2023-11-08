@@ -23,6 +23,17 @@ const routes = [
                 name: "Add",
                 component: () => import("../components/Add.vue"),
             },
+            {
+                path: "model",
+                name: "Model",
+                component: () => import("../components/Model.vue"),
+            },
+            {
+                path: "model/:typeTrain",
+                name: "Selectdat",
+                component: () => import("../components/SelectData.vue"),
+                // props: true,
+            },
         ],
     },
 ];

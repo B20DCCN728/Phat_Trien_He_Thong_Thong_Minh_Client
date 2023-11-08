@@ -195,7 +195,7 @@
     try {
       // Send an HTTP DELETE request to delete the record
         axios
-          .delete(`http://127.0.0.1:8000/sample/${key}`)
+          .delete(`http://127.0.0.1:8000/dataset/${datasetId.value}/${key}`)
           .then((response) => {
             message.success('Đã xóa mẫu thành công' + JSON.stringify(response.data));
           })

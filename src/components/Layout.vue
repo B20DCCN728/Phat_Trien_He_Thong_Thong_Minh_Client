@@ -11,19 +11,23 @@
         <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
           <a-menu-item key="1">
             <user-outlined />
-            <span class="nav-text">Quản lí mẫu</span>
+            <router-link to="/home/dataset">Quản lí mẫu</router-link>
+            <!-- <span class="nav-text">Quản lí mẫu</span> -->
           </a-menu-item>
           <a-menu-item key="2">
             <video-camera-outlined />
-            <span class="nav-text">Quản lí nhãn</span>
+            <router-link to="">Quản lí nhãn</router-link>
+            <!-- <span class="nav-text">Quản lí nhãn</span> -->
           </a-menu-item>
           <a-menu-item key="3">
             <upload-outlined />
-            <span class="nav-text">Quản lí model</span>
+            <router-link to="/home/model">Quản lí model</router-link>
+            <!-- <span class="nav-text">Quản lí model</span> -->
           </a-menu-item>
           <a-menu-item key="4">
             <user-outlined />
-            <span class="nav-text">Xử lí thông minh</span>
+            <router-link to="">Xử lí thông minh</router-link>
+            <!-- <span class="nav-text">Xử lí thông minh</span> -->
           </a-menu-item>
         </a-menu>
       </a-layout-sider>
@@ -44,7 +48,7 @@
   </template>
   <script setup>
   import { ref } from 'vue';
-  import Table from './Table.vue';
+  // import Table from './Table.vue';
   const onCollapse = (collapsed, type) => {
     console.log(collapsed, type);
   };
